@@ -1,4 +1,4 @@
-<h1>Apliakacja ManageFC/h1>
+<h1>Apliakacja ManageFC</h1>
 
 <div>
   <p>
@@ -12,4 +12,6 @@
     Demo apliakcji dostepne jest pod <a href="https://youtu.be/IFDhJtvC-jc" target="_blank">linkiem</a>
   </p>
 </div>
+
+
 
