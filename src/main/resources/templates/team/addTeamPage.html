@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add team | ManageFC</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+</head>
+<body>
+
+<div class="header" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+
+    <header>
+        <!-- <p><img class="logo" style="width: 40; height: 40;" src="https://img.freepik.com/free-vector/football-logo-design-vector-flat-graphic_53876-143476.jpg" alt="logo">ManageFC</p> -->
+
+        <p class="logoText">ManageFC</p>
+
+        <nav>
+            <ul class="nav__links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/find-plans-by-date">Calendar</a></li>
+                <li><a href="/invitations">Invitations</a></li>
+                <Li><a href="/myteams">My Teams</a></li>
+                <Li><a href="/admin/settings">Settings</a></li>
+            </ul>
+        </nav>
+
+        <nav>
+            <ul>
+                <div class="dropdown">
+                    <a class="cta" href="#" style="margin-right: 20px;"> <span th:text="${#authentication.principal.firstName}"></span> <span th:text="${#authentication.principal.lastName}"></span></p></a>
+                    <ul>
+                        <li><a th:href="@{/edit-profile(userId=${#authentication.principal.id})}">Edit profile</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </div>
+            </ul>
+        </nav>
+
+    </header>
+
+</div>
+
+
+
+<div class="form">
+    <div class="content">
+        <header>Add team</header>
+
+        <form th:action="@{/admin/api/v1/addteam}" method="post">
+            <div class="field">
+                <input type="text" id="teamName" placeholder="Team name" name="teamName" required/>
+            </div>
+
+            <div class="field space">
+                <input class="inputButton" type="submit" value="ADD TEAM"  style="background-color: rgba(0, 136, 169, 1);"/>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

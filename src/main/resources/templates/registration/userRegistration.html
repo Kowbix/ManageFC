@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in | ManageFC</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: #24252A;
+}
+
+li, a, button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #edf0f1;
+  text-decoration: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 10%;
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.nav__links {
+  list-style: none;
+}
+
+.nav__links li {
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+.nav__links li a {
+  transition: all 0.3s ease 0s;
+}
+
+.nav__links li a:hover {
+  color: #0088a9;
+}
+
+button {
+
+  padding: 9px 25px;
+  background-color: rgba(0, 136, 169, 1); border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+button:hover {
+  background-color: rgba(0, 136, 169, 0.8);
+}
+
+.signin {
+  padding: 9px 25px;
+  background-color: #fff; border: none;
+  color: black;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.logoText {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #edf0f1;
+  text-decoration: none;
+}
+
+.cta {
+  font-family: "Montserrat", sans-serif;
+  display: inline-block;
+  font-weight: 500;
+  color: rgba(0, 136, 169, 0.8);
+}
+
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  width: 370px;
+  text-align: center;
+  padding: 60px 32px;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
+}
+
+.content header {
+  color: white;
+  font-weight: 500;
+  font-size: 33px;
+  margin: 0 0 35px 0;
+  background: transparent;
+  font-family: "Montserrat", sans-serif;
+}
+
+form {
+  background: transparent;
+}
+
+.field {
+  position: relative;
+  height: 45px;
+  width: 100%;
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.94);
+}
+
+.field input {
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #222;
+  font-size: 16px;
+  padding: 9px 25px;
+}
+
+.field select {
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #222;
+  font-size: 16px;
+  padding: 9px 25px;
+}
+
+.space {
+  margin-top: 16px;
+}
+
+.inputButton {
+
+  padding: 9px 25px;
+  background-color: rgba(0, 136, 169, 1); border: none;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+.inputButton:hover {
+  background-color: rgba(0, 136, 169, 0.8);
+}
+
+.message {
+  margin-top: 16px;
+  text-align: center;
+  position: relative;
+  background: transparent;
+  height: 45px;
+  width: 100%;
+  display: flex;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 9px 25px;
+}
+
+    </style>
+
+</head>
+<body>
+
+<!--ROLA ADMIN-->
+<div class="header" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+
+    <header>
+        <p class="logoText">ManageFC</p>
+
+        <nav>
+            <ul class="nav__links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/find-plans-by-date">Calendar</a></li>
+                <li><a href="/invitations">Invitations</a></li>
+                <Li><a href="/myteams">My Teams</a></li>
+                <Li><a href="/admin/settings">Settings</a></li>
+            </ul>
+        </nav>
+
+        <nav>
+            <ul>
+                <div class="dropdown">
+                    <a class="cta" href="#" style="margin-right: 20px;"> <span th:text="${#authentication.principal.firstName}"></span>
+                        <span th:text="${#authentication.principal.lastName}"></span></p></a>
+                    <ul>
+                        <li><a th:href="@{/edit-profile(userId=${#authentication.principal.id})}">Edit profile</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </div>
+            </ul>
+        </nav>
+    </header>
+</div>
+
+
+<!--ROLA USER-->
+<div class="header" th:if="${#authorization.expression('hasRole(''USER'')')}">
+    <header>
+        <p class="logoText">ManageFC</p>
+
+        <nav>
+            <ul class="nav__links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/find-plans-by-date">Calendar</a></li>
+                <li><a href="/invitations">Invitations</a></li>
+                <li><a href="#">Groups</a></li>
+            </ul>
+        </nav>
+
+        <nav>
+            <ul>
+                <div class="dropdown">
+                    <a class="cta" href="#" style="margin-right: 20px;"> <span th:text="${#authentication.principal.firstName}"></span>
+                        <span th:text="${#authentication.principal.lastName}"></span></p></a>
+                    <ul>
+                        <li><a th:href="@{/edit-profile(userId=${#authentication.principal.id})}">Edit profile</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </div>
+            </ul>
+        </nav>
+    </header>
+</div>
+
+<!--NIE ZALOGOWANY-->
+<div class="header" th:unless="${#authorization.expression('isAuthenticated()')}">
+    <header style="width: 100%;">
+
+        <!-- <p class="logoText">ManageFC</p> -->
+
+        <nav >
+            <ul>
+                <p class="logoText" style="">ManageFC</p>
+            </ul>
+        </nav>
+
+        <nav>
+            <ul class="nav__links">
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Projects</a></li>
+                <Li><a href="#">About</a></li>
+            </ul>
+        </nav>
+
+        <nav>
+            <ul>
+                <a class="cta" href="/login" ><button>Log In</button></a>
+                <a class="cta" href="/registration" style="margin-left: 20px;"><button class="signin">Sign In</button></a>
+            </ul>
+        </nav>
+
+    </header>
+</div>
+
+
+<div class="form">
+    <div class="content">
+        <header>Sign in</header>
+
+        <form th:action="@{/api/v1/registration}" method="post">
+            <div class="field">
+                <span></span>
+                <input type="text" id="firstName" placeholder="First name" name="firstName" required/>
+            </div>
+
+            <div class="field space">
+                <span></span>
+                <input type="text" id="lastName" placeholder="Last name"  name="lastName" required/>
+            </div>
+
+            <div class="field space">
+                <span></span>
+                <input type="date" id="birthDate" placeholder="Birth date" name="birthDate" required/>
+            </div>
+
+
+            <div class="field space" >
+                <select name="position" id="position" required>
+                    <option value="1" disabled>Choose position</option>
+                    <option value="Forward">Forward</option>
+                    <option value="Midfielder">Midfielder</option>
+                    <option value="Defender">Defender</option>
+                    <option value="Goalkeeper">Goalkeeper</option>
+                </select>
+            </div>
+
+
+            <div class="field space">
+                <span></span>
+                <input type="email" id="email"  placeholder="Email" name="email" required/>
+            </div>
+
+            <div class="field space">
+                <span></span>
+                <input type="password" id="password" placeholder="Password"  name="password" required/>
+            </div>
+
+            <div th:if="${errorMessage}" style="background: transparent;">
+                <div th:text="${errorMessage}" class="message" style="color: red;"></div>
+            </div>
+
+            <div class="field space">
+                <input class="inputButton" type="submit" value="SIGN IN"  style="background-color: rgba(0, 136, 169, 1);"/>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+
+
+</body>
+</html>
